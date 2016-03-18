@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class HslVM {
-        public int hue = 53;
+        public int hue = 192;
         public int saturation = 100;
         public int lightness = 50;
     }
