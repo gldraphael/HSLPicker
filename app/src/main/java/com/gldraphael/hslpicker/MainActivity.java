@@ -1,10 +1,14 @@
 package com.gldraphael.hslpicker;
 
+import android.annotation.TargetApi;
+import android.content.res.ColorStateList;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
 
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void setLightness(int lightness) {
             this.lightness = lightness;
-            notifyPropertyChanged(BR.lightness);
+            notifyPropertyChanged(com.gldraphael.hslpicker.BR.lightness);
         }
 
         @Override
@@ -100,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     private HslVM hsl = new HslVM(new IOnColorsUpdatedListener() {
         @Override
         public void onColorsUpdated() {
-            updateBackground();
+            updateUI();
         }
     });
     private View content = null;
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         // Configure databinding
         binding = DataBindingUtil.setContentView(this, R.layout.content_main);
         binding.setHslvm(hsl);
-        updateBackground();
+        updateUI();
 
         binding.sbHue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -168,15 +172,47 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateBackground(){
+    private void updateUI(){
         int color = hsl.getColor();
 
+        // Update background color
         Log.d(TAG, "Updating background to " + hsl.toString());
         content.setBackgroundColor(color);
 
-        // Update the satus bar color for API 21 or greater
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // update the status bar color
             getWindow().setStatusBarColor(color);
+
+            // Update the slider colors
+            int compColor = getContrastColor(color);
+            Log.d(TAG, "Updating sliders to " + String.format("#%06X",compColor));
+            updateSlider(binding.sbHue, compColor);
+            updateSlider(binding.sbSaturation, compColor);
+            updateSlider(binding.sbLightness, compColor);
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void updateSlider(SeekBar seekBar, int color){
+        ColorStateList colorStateList = ColorStateList.valueOf(color);
+        seekBar.setProgressTintList(colorStateList);
+        seekBar.setProgressBackgroundTintList(colorStateList);
+        seekBar.setThumbTintList(colorStateList);
+    }
+
+    private int getContrastColor(@ColorInt int color){
+
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+
+        if(hsv[2] < 0.5) {
+            hsv[2] = 0.7f;
+        } else {
+            hsv[2] = 0.3f;
+        }
+
+        hsv[1] = hsv[1] * 0.2f;
+
+        return Color.HSVToColor(hsv);
     }
 }
