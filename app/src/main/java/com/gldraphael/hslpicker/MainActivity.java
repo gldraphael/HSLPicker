@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             super.notifyPropertyChanged(fieldId);
 
             eventHandler.onColorsUpdated();
-            Log.d(TAG, "propertyChange");
+            Log.v(TAG, "propertyChange");
         }
 
         @Bindable
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Updating background to " + hsl.toString());
         content.setBackgroundColor(color);
 
-        // // Update the satus bar color for API 21 or greater
+        // Update the satus bar color for API 21 or greater
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(color);
         }
