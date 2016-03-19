@@ -4,7 +4,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         private IOnColorsUpdated eventHandler;
 
-        private int hue = 192;
-        private int saturation = 0;
-        private int lightness = 0;
+        private int hue = 205;
+        private int saturation = 100;
+        private int lightness = 50;
 
         public HslVM(IOnColorsUpdated eventHandler){
             this.eventHandler = eventHandler;
