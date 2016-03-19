@@ -34,8 +34,12 @@ public class MainActivity extends AppCompatActivity {
             this.eventHandler = eventHandler;
         }
 
+        /**
+         * Converts a color to it's hex representation: http://stackoverflow.com/a/6540378/1678053
+         * @return hex string of the color without alpha
+         */
         public String getHex(){
-            return "#CCC";
+            return String.format("#%06X", (0xFFFFFF & getColor()));
         }
 
         public int getColor(){
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public String toString() {
-            return "HSL(" + hue + ", " + saturation + ", " + lightness + ")";
+            return "HSL(" + hue + ", " + saturation + ", " + lightness + ") " + getHex();
         }
     }
 
