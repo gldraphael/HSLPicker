@@ -24,7 +24,6 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:progress="@{hslvm.hue, default=192}"
-        android:onClick="onClickSlider"
         android:max="360"
         android:id="@+id/sbHue" />
 
@@ -34,7 +33,6 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:progress="@{hslvm.saturation, default=100}"
-        android:onClick="onClickSlider"
         android:id="@+id/sbSaturation" />
 
     <SeekBar
@@ -43,7 +41,6 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:progress="@{hslvm.lightness, default=50}"
-        android:onClick="onClickSlider"
         android:id="@+id/sbLightness" />
 
 </LinearLayout>

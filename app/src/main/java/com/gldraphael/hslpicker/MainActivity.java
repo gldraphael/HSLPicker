@@ -175,8 +175,4 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Updating background to " + hsl.toString());
         content.setBackgroundColor(hsl.getColor());
     }
-
-    public void onClickSlider(View view) {
-        updateBackground();
-    }
 }
