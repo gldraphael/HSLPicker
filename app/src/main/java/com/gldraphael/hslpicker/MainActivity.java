@@ -3,6 +3,7 @@ package com.gldraphael.hslpicker;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -168,7 +169,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateBackground(){
+        int color = hsl.getColor();
+
         Log.d(TAG, "Updating background to " + hsl.toString());
-        content.setBackgroundColor(hsl.getColor());
+        content.setBackgroundColor(color);
+
+        // // Update the satus bar color for API 21 or greater
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(color);
+        }
     }
 }
