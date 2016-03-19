@@ -18,6 +18,8 @@ import com.gldraphael.hslpicker.databinding.ContentMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = "###MainActivity";
+
     /**
      * The main activity ViewModel
      */
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         public synchronized void notifyChange() {
             super.notifyChange();
             eventHandler.onColorsUpdated();
-            Log.d("###", "notifyChange");
+            Log.d(TAG, "notifyChange");
         }
 
         @Override
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             super.notifyPropertyChanged(fieldId);
 
             eventHandler.onColorsUpdated();
-            Log.d("###", "propertyChange");
+            Log.d(TAG, "propertyChange");
         }
 
         @Bindable
@@ -103,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onColorsUpdated() {
             updateBackground();
-            Log.d("###", "Hey!");
         }
     });
     private View content = null;
@@ -153,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         binding.sbLightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateBackground(){
-        Log.d("###", "Updating background to " + hsl.toString());
+        Log.d(TAG, "Updating background to " + hsl.toString());
         content.setBackgroundColor(hsl.getColor());
     }
 
