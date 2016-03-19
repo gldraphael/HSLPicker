@@ -11,9 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
-import com.gldraphael.hslpicker.BR;
-
 import com.gldraphael.hslpicker.databinding.ContentMainBinding;
+import com.gldraphael.hslpicker.BR;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
      */
     public class HslVM extends BaseObservable {
 
-        private IOnColorsUpdated eventHandler;
+        private IOnColorsUpdatedListener eventHandler;
 
         private int hue = 205;
         private int saturation = 100;
         private int lightness = 50;
 
-        public HslVM(IOnColorsUpdated eventHandler){
+        public HslVM(IOnColorsUpdatedListener eventHandler){
             this.eventHandler = eventHandler;
         }
 
@@ -47,13 +46,6 @@ public class MainActivity extends AppCompatActivity {
                     getHue(),
                     getSaturation() * 0.01f,
                     getLightness() * 0.01f});
-        }
-
-        @Override
-        public synchronized void notifyChange() {
-            super.notifyChange();
-            eventHandler.onColorsUpdated();
-            Log.d(TAG, "notifyChange");
         }
 
         @Override
@@ -100,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public interface IOnColorsUpdated {
+    public interface IOnColorsUpdatedListener {
         void onColorsUpdated();
     }
 
-    private HslVM hsl = new HslVM(new IOnColorsUpdated() {
+    private HslVM hsl = new HslVM(new IOnColorsUpdatedListener() {
         @Override
         public void onColorsUpdated() {
             updateBackground();
