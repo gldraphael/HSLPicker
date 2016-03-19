@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
          * Converts a color to it's hex representation: http://stackoverflow.com/a/6540378/1678053
          * @return hex string of the color without alpha
          */
+        @Bindable
         public String getHex(){
             return String.format("#%06X", (0xFFFFFF & getColor()));
         }
@@ -176,20 +177,23 @@ public class MainActivity extends AppCompatActivity {
         int color = hsl.getColor();
 
         // Update background color
-        Log.d(TAG, "Updating background to " + hsl.toString());
+        Log.v(TAG, "Updating background to " + hsl.toString());
         content.setBackgroundColor(color);
 
+        int compColor = getContrastColor(color);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // update the status bar color
             getWindow().setStatusBarColor(color);
 
             // Update the slider colors
-            int compColor = getContrastColor(color);
             Log.d(TAG, "Updating sliders to " + String.format("#%06X",compColor));
             updateSlider(binding.sbHue, compColor);
             updateSlider(binding.sbSaturation, compColor);
             updateSlider(binding.sbLightness, compColor);
         }
+
+        binding.txtHexCode.setText(hsl.getHex());
+        binding.txtHexCode.setTextColor(compColor);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
